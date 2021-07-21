@@ -3,10 +3,7 @@ package br.com.brzupacademy.propostas.proposta;
 import br.com.brzupacademy.propostas.validacao.CpfCnpj;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -27,6 +24,8 @@ public class Proposta {
     private String endereco;
     @Min(0)
     private BigDecimal salario;
+    @Enumerated(EnumType.STRING)
+    private EstadoAnaliseFinanceira estadoAnaliseFinanceira = EstadoAnaliseFinanceira.AGUARDANDO;
 
     public Proposta(@CpfCnpj String documento, @Email String email, @NotBlank String nome, @NotBlank String endereco, @Min(0) BigDecimal salario) {
         this.documento = documento;
@@ -61,5 +60,14 @@ public class Proposta {
 
     public BigDecimal getSalario() {
         return salario;
+    }
+
+
+    public void setEstadoAnaliseFinanceira(EstadoAnaliseFinanceira estadoAnaliseFinanceira) {
+        this.estadoAnaliseFinanceira = estadoAnaliseFinanceira;
+    }
+
+    public EstadoAnaliseFinanceira getEstadoAnaliseFinanceira() {
+        return estadoAnaliseFinanceira;
     }
 }
