@@ -1,6 +1,7 @@
 package br.com.brzupacademy.propostas.proposta;
 
 import br.com.brzupacademy.propostas.validacao.CpfCnpj;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +35,9 @@ public class Proposta {
         this.endereco = endereco;
         this.salario = salario;
     }
+
+    @Deprecated
+    public Proposta(){}
 
     public Long getId() {
         return id;
