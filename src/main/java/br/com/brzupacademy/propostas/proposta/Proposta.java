@@ -26,6 +26,7 @@ public class Proposta {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private EstadoAnaliseFinanceira estadoAnaliseFinanceira = EstadoAnaliseFinanceira.AGUARDANDO;
+    private String idCartao;
 
     public Proposta(@CpfCnpj String documento, @Email String email, @NotBlank String nome, @NotBlank String endereco, @Min(0) BigDecimal salario) {
         this.documento = documento;
@@ -62,6 +63,9 @@ public class Proposta {
         return salario;
     }
 
+    public void setIdCartao(String idCartao) {
+        this.idCartao = idCartao;
+    }
 
     public void setEstadoAnaliseFinanceira(EstadoAnaliseFinanceira estadoAnaliseFinanceira) {
         this.estadoAnaliseFinanceira = estadoAnaliseFinanceira;
