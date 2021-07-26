@@ -1,9 +1,11 @@
 package br.com.brzupacademy.propostas.proposta;
 
 import br.com.brzupacademy.propostas.exception.ApiException;
+import br.com.brzupacademy.propostas.proposta.analiseFinanceira.AnaliseFinanceira;
 import br.com.brzupacademy.propostas.proposta.analiseFinanceira.AnaliseFinanceiraResponse;
 import br.com.brzupacademy.propostas.proposta.analiseFinanceira.ClienteAnaliseFinanceira;
 import br.com.brzupacademy.propostas.proposta.analiseFinanceira.EnviaProposta;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class PropostaController {
     @Autowired
     private PropostaRepository propostaRepository;
     @Autowired
-    private ClienteAnaliseFinanceira clienteAnaliseFinanceira;
+    private AnaliseFinanceira analiseFinanceira;
 
     @PostMapping
     @Transactional
@@ -31,8 +33,7 @@ public class PropostaController {
             Proposta proposta = propostaRequest.toModel();
             propostaRepository.saveAndFlush(proposta);
 
-            AnaliseFinanceiraResponse analise = clienteAnaliseFinanceira.enviaProposta(
-                    new EnviaProposta(proposta));
+            AnaliseFinanceiraResponse analise = analiseFinanceira.enviaParaAnalise(proposta);
 
             proposta.setEstadoAnaliseFinanceira(analise.getResultadoSolicitacao().normaliza());
 

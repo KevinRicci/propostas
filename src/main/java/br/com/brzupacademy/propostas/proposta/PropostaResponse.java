@@ -1,13 +1,15 @@
 package br.com.brzupacademy.propostas.proposta;
 
+import java.util.UUID;
+
 public class PropostaResponse {
 
-    private long id;
+    private String id;
     private String nome;
     private EstadoAnaliseFinanceira estadoAnaliseFinanceira;
 
     public PropostaResponse(Proposta proposta) {
-        this.id = proposta.getId();
+        this.id = proposta.getId().toString();
         this.nome = proposta.getNome();
         this.estadoAnaliseFinanceira = proposta.getEstadoAnaliseFinanceira();
     }
@@ -15,7 +17,7 @@ public class PropostaResponse {
     @Deprecated
     public PropostaResponse(){}
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 

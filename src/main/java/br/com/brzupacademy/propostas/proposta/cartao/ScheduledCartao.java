@@ -31,7 +31,7 @@ public class ScheduledCartao {
      */
 
     @Transactional
-    @Scheduled(fixedRate = 100)
+    @Scheduled(fixedRate = 60000)
     public void associaPropostaCartao(){
         Optional<List<Proposta>> propostasSemCartao =
                 propostaRepository.findByEstadoAnaliseFinanceiraAndIdCartaoNull(EstadoAnaliseFinanceira.ELEGIVEL);

@@ -25,7 +25,7 @@ public class Proposta {
     @Min(0)
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
-    private EstadoAnaliseFinanceira estadoAnaliseFinanceira = EstadoAnaliseFinanceira.AGUARDANDO;
+    private EstadoAnaliseFinanceira estadoAnaliseFinanceira;
     private String idCartao;
 
     public Proposta(@CpfCnpj String documento, @Email String email, @NotBlank String nome, @NotBlank String endereco, @Min(0) BigDecimal salario) {

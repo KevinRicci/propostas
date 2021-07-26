@@ -10,7 +10,7 @@ public class EnviaProposta {
     private String documento;
 
     public EnviaProposta(Proposta proposta) {
-        this.idProposta = String.valueOf(proposta.getId());
+        this.idProposta = proposta.getId().toString();
         this.nome = proposta.getNome();
         this.documento = proposta.getDocumento();
     }

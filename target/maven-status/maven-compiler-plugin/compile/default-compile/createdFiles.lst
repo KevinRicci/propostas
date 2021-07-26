@@ -3,6 +3,7 @@ br\com\brzupacademy\propostas\proposta\analiseFinanceira\EnviaProposta.class
 br\com\brzupacademy\propostas\proposta\analiseFinanceira\ClienteAnaliseFinanceira.class
 br\com\brzupacademy\propostas\proposta\PropostaResponse.class
 br\com\brzupacademy\propostas\exception\ApiException.class
+br\com\brzupacademy\propostas\proposta\analiseFinanceira\AnaliseFinanceira.class
 br\com\brzupacademy\propostas\proposta\PropostaRequest.class
 br\com\brzupacademy\propostas\proposta\EstadoAnaliseFinanceira.class
 br\com\brzupacademy\propostas\exception\ErroPadronizado.class
