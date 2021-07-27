@@ -4,6 +4,7 @@ import br.com.brzupacademy.propostas.proposta.Proposta;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 public class Bloqueio {
@@ -14,6 +15,7 @@ public class Bloqueio {
     private String ipOrigem;
     @NotBlank
     private String userAgentOrigem;
+    private LocalDateTime instanteBloqueio = LocalDateTime.now();
     @OneToOne
     @JoinColumn(unique = true)
     private Proposta proposta;
@@ -37,6 +39,10 @@ public class Bloqueio {
 
     public String getUserAgentOrigem() {
         return userAgentOrigem;
+    }
+
+    public LocalDateTime getInstanteBloqueio() {
+        return instanteBloqueio;
     }
 
     public long getPropostaId() {
