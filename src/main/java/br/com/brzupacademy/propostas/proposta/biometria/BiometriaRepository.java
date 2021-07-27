@@ -1,4 +1,4 @@
-package br.com.brzupacademy.propostas.biometria;
+package br.com.brzupacademy.propostas.proposta.biometria;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

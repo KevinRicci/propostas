@@ -11,7 +11,5 @@ public interface PropostaRepository extends JpaRepository<Proposta, Long> {
 
     public Optional<Proposta> findByDocumento(String documento);
 
-    public Optional<Proposta> findByIdCartao(String idCartao);
-
     public Optional<List<Proposta>> findByEstadoAnaliseFinanceiraAndIdCartaoNull(EstadoAnaliseFinanceira estadoAnaliseFinanceira);
 }

@@ -1,7 +1,11 @@
 package br.com.brzupacademy.propostas.proposta;
 
+import br.com.brzupacademy.propostas.exception.ApiException;
 import br.com.brzupacademy.propostas.validacao.CpfCnpj;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -26,6 +30,7 @@ public class Proposta {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private EstadoAnaliseFinanceira estadoAnaliseFinanceira;
+    @Column(unique = true)
     private String idCartao;
 
     public Proposta(@CpfCnpj String documento, @Email String email, @NotBlank String nome, @NotBlank String endereco, @Min(0) BigDecimal salario) {
@@ -65,6 +70,20 @@ public class Proposta {
 
     public void setIdCartao(String idCartao) {
         this.idCartao = idCartao;
+    }
+
+    public boolean cartaoIsPresent(){
+        if(this.idCartao != null){
+            return true;
+        }
+        else return false;
+    }
+
+    public void pertenceAoUsuario(JwtAuthenticationToken jwtAuthenticationToken){
+        Jwt token = (Jwt) jwtAuthenticationToken.getPrincipal();
+        if(!this.documento.equals(token.getClaimAsString("documento"))){
+            throw new ApiException(HttpStatus.FORBIDDEN, "O recurso sendo acessado não pertence ao usuário autenticado");
+        }
     }
 
     public void setEstadoAnaliseFinanceira(EstadoAnaliseFinanceira estadoAnaliseFinanceira) {

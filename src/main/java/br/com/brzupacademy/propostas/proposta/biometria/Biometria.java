@@ -1,4 +1,4 @@
-package br.com.brzupacademy.propostas.biometria;
+package br.com.brzupacademy.propostas.proposta.biometria;
 
 import br.com.brzupacademy.propostas.proposta.Proposta;
 
@@ -15,7 +15,6 @@ public class Biometria {
     private String biometria;
     private LocalDateTime instante = LocalDateTime.now();
     @ManyToOne
-    @JoinColumn(name = "id_cartao", referencedColumnName = "idCartao")
     private Proposta proposta;
 
     public Biometria(String biometria, Proposta proposta) {
