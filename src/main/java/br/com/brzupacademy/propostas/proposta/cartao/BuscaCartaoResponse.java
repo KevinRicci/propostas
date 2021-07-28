@@ -4,11 +4,11 @@ import br.com.brzupacademy.propostas.proposta.Proposta;
 
 import javax.validation.constraints.NotNull;
 
-public class CartaoResponse {
+public class BuscaCartaoResponse {
 
     private String id;
 
-    public CartaoResponse(){}
+    public BuscaCartaoResponse(){}
 
     public void associaPropostaCartao(@NotNull Proposta proposta){
         if(proposta != null && id != null){

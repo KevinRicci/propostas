@@ -1,25 +1,12 @@
 package br.com.brzupacademy.propostas.proposta;
 
 import br.com.brzupacademy.propostas.exception.ApiException;
-import br.com.brzupacademy.propostas.proposta.analiseFinanceira.AnaliseFinanceira;
-import br.com.brzupacademy.propostas.proposta.analiseFinanceira.AnaliseFinanceiraResponse;
-import br.com.brzupacademy.propostas.proposta.analiseFinanceira.ClienteAnaliseFinanceira;
-import br.com.brzupacademy.propostas.proposta.analiseFinanceira.EnviaProposta;
-import feign.FeignException;
+import br.com.brzupacademy.propostas.proposta.analiseFinanceira.SistemaAnaliseFinanceira;
+import br.com.brzupacademy.propostas.proposta.analiseFinanceira.EnviaPropostaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticatedPrincipal;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -34,7 +21,7 @@ public class PropostaController {
     @Autowired
     private PropostaRepository propostaRepository;
     @Autowired
-    private AnaliseFinanceira analiseFinanceira;
+    private SistemaAnaliseFinanceira sistemaAnaliseFinanceira;
 
     @PostMapping
     @Transactional
@@ -43,7 +30,7 @@ public class PropostaController {
             Proposta proposta = propostaRequest.toModel();
             propostaRepository.saveAndFlush(proposta);
 
-            AnaliseFinanceiraResponse analise = analiseFinanceira.enviaParaAnalise(proposta);
+            EnviaPropostaResponse analise = sistemaAnaliseFinanceira.enviaParaAnalise(proposta);
 
             proposta.setEstadoAnaliseFinanceira(analise.getResultadoSolicitacao().normaliza());
 

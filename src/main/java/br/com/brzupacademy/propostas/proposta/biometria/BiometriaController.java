@@ -25,7 +25,7 @@ public class BiometriaController {
     private PropostaRepository propostaRepository;
 
     @Transactional
-    @PostMapping("/{idPropostaCartao}/cartao/biometria")
+    @PostMapping("/{idPropostaCartao}/cartoes/biometrias")
     public ResponseEntity<?> cadastra(JwtAuthenticationToken jwtAuthenticationToken, @PathVariable long idPropostaCartao, @RequestBody @Valid BiometriaRequest biometriaRequest, UriComponentsBuilder uriComponentsBuilder){
         Optional<Proposta> possivelPropostaComCartao = propostaRepository.findById(idPropostaCartao);
         if(possivelPropostaComCartao.isPresent() && possivelPropostaComCartao.get().cartaoIsPresent()) {
@@ -33,7 +33,7 @@ public class BiometriaController {
             Biometria biometria = biometriaRequest.toModel(possivelPropostaComCartao.get());
             biometriaRepository.save(biometria);
 
-            URI uri = uriComponentsBuilder.path("/propostas/{idPropostaCartao}/cartao/biometria/{id}")
+            URI uri = uriComponentsBuilder.path("/propostas/{idPropostaCartao}/cartoes/biometrias/{id}")
                     .buildAndExpand(idPropostaCartao, biometria.getId()).toUri();
             return ResponseEntity.created(uri).build();
         }

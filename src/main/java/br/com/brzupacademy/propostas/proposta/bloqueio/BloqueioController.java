@@ -3,6 +3,7 @@ package br.com.brzupacademy.propostas.proposta.bloqueio;
 import br.com.brzupacademy.propostas.exception.ApiException;
 import br.com.brzupacademy.propostas.proposta.Proposta;
 import br.com.brzupacademy.propostas.proposta.PropostaRepository;
+import br.com.brzupacademy.propostas.proposta.cartao.SistemaCartao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,23 +25,28 @@ public class BloqueioController {
     private BloqueioRepository bloqueioRepository;
     @Autowired
     private PropostaRepository propostaRepository;
+    @Autowired
+    private SistemaCartao sistemaCartao;
 
-    @PostMapping("/{idPropostaCartao}/cartao/bloqueio")
+    @PostMapping("/{id}/cartoes/bloqueios")
     @Transactional
-    public ResponseEntity<BloqueioResponse> bloqueiaCartao(@PathVariable long idPropostaCartao,
+    public ResponseEntity<BloqueioResponse> bloqueiaCartao(@PathVariable long id,
                                                            HttpServletRequest httpServletRequest,
                                                            UriComponentsBuilder uriComponentsBuilder,
                                                            JwtAuthenticationToken jwtAuthenticationToken){
 
-        Optional<Proposta> possivelPropostaComCartao = propostaRepository.findById(idPropostaCartao);
+        Optional<Proposta> possivelPropostaComCartao = propostaRepository.findById(id);
         if(possivelPropostaComCartao.isPresent() && possivelPropostaComCartao.get().cartaoIsPresent()){
-            possivelPropostaComCartao.get().pertenceAoUsuario(jwtAuthenticationToken);
-            if(bloqueioRepository.findByProposta_Id(idPropostaCartao).isEmpty()) {
+            Proposta proposta = possivelPropostaComCartao.get();
+            proposta.pertenceAoUsuario(jwtAuthenticationToken);
+            if(bloqueioRepository.findByProposta_Id(id).isEmpty()) {
+
+                sistemaCartao.bloqueiaCartaoDaProposta(proposta, "Sistema de propostas");
 
                 Bloqueio bloqueio = new Bloqueio(
                         getClientIpAdress(httpServletRequest),
                         httpServletRequest.getHeader("user-agent"),
-                        possivelPropostaComCartao.get());
+                        proposta);
 
                 bloqueioRepository.save(bloqueio);
 

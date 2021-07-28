@@ -68,6 +68,10 @@ public class Proposta {
         return salario;
     }
 
+    public String getIdCartao() {
+        return idCartao;
+    }
+
     public void setIdCartao(String idCartao) {
         this.idCartao = idCartao;
     }

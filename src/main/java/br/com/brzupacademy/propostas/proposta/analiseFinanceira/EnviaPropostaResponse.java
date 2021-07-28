@@ -1,13 +1,13 @@
 package br.com.brzupacademy.propostas.proposta.analiseFinanceira;
 
-public class AnaliseFinanceiraResponse {
+public class EnviaPropostaResponse {
 
     private String documento;
     private String nome;
     private String idProposta;
     private StatusAnalise resultadoSolicitacao;
 
-    public AnaliseFinanceiraResponse(String documento, String nome, String idProposta, StatusAnalise resultadoSolicitacao) {
+    public EnviaPropostaResponse(String documento, String nome, String idProposta, StatusAnalise resultadoSolicitacao) {
         this.documento = documento;
         this.nome = nome;
         this.idProposta = idProposta;
@@ -15,7 +15,7 @@ public class AnaliseFinanceiraResponse {
     }
 
     @Deprecated
-    public AnaliseFinanceiraResponse(){}
+    public EnviaPropostaResponse(){}
 
     public String getDocumento() {
         return documento;

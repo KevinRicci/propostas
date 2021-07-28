@@ -19,11 +19,10 @@ import java.util.Optional;
 @EnableScheduling
 public class ScheduledCartao {
 
-    private final Logger logger = LoggerFactory.getLogger(ScheduledCartao.class);
     @Autowired
     private PropostaRepository propostaRepository;
     @Autowired
-    private ClienteCartao clienteCartao;
+    private SistemaCartao sistemaCartao;
 
     /**
      * Busca as proposta com estado ELEGIVEL no sistema e no sistema de cartões
@@ -38,12 +37,7 @@ public class ScheduledCartao {
 
         if(propostasSemCartao.isPresent()){
             propostasSemCartao.get().forEach(proposta ->{
-                try {
-                    CartaoResponse cartao = clienteCartao.buscaCartao(String.valueOf(proposta.getId()));
-                    cartao.associaPropostaCartao(proposta);
-                }catch(FeignException exception){
-                    logger.info("Aguardando próxima interação");
-                }
+                sistemaCartao.associaCartaoA(proposta);
             });
         }
     }
