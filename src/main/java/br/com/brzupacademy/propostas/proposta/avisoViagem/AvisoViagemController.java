@@ -3,6 +3,7 @@ package br.com.brzupacademy.propostas.proposta.avisoViagem;
 import br.com.brzupacademy.propostas.exception.ApiException;
 import br.com.brzupacademy.propostas.proposta.Proposta;
 import br.com.brzupacademy.propostas.proposta.PropostaRepository;
+import br.com.brzupacademy.propostas.proposta.cartao.SistemaCartao;
 import br.com.brzupacademy.propostas.utils.ClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ public class AvisoViagemController {
     private AvisoViagemRepository avisoViagemRepository;
     @Autowired
     private PropostaRepository propostaRepository;
+    @Autowired
+    private SistemaCartao sistemaCartao;
 
     @PostMapping("/{id}/cartoes/avisos-viagens")
     @Transactional
@@ -35,6 +38,7 @@ public class AvisoViagemController {
             propostaComCartao.pertenceAoUsuario(token);
             AvisoViagem avisoViagem = avisoViagemRequest.toModel(propostaComCartao, httpServletRequest);
 
+            sistemaCartao.avisoViagem(avisoViagem, propostaComCartao);
             avisoViagemRepository.save(avisoViagem);
 
             return ResponseEntity.ok().build();

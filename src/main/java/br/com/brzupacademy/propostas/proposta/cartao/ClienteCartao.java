@@ -22,4 +22,13 @@ public interface ClienteCartao {
     @PostMapping("api/cartoes/{id}/bloqueios")
     public Map<String, Object> bloqueiaCartao(@PathVariable(value = "id") String idCartao,
                                               Map<String, String> sistemaResponsavel);
+
+    /**
+     *
+     * @param detalhesViagem espera chaves: "destino" e "validoAte"
+     * @return chave "resultado"
+     */
+    @PostMapping("api/cartoes/{id}/avisos")
+    public Map<String, Object> notificaAvisoViagem(@PathVariable(value = "id") String idCartao,
+                                                   Map<String, Object> detalhesViagem);
 }
