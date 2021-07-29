@@ -4,6 +4,7 @@ import br.com.brzupacademy.propostas.exception.ApiException;
 import br.com.brzupacademy.propostas.proposta.Proposta;
 import br.com.brzupacademy.propostas.proposta.PropostaRepository;
 import br.com.brzupacademy.propostas.proposta.cartao.SistemaCartao;
+import br.com.brzupacademy.propostas.utils.ClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class BloqueioController {
                 sistemaCartao.bloqueiaCartaoDaProposta(proposta, "Sistema de propostas");
 
                 Bloqueio bloqueio = new Bloqueio(
-                        getClientIpAdress(httpServletRequest),
+                        ClientRequest.ipAdress(httpServletRequest),
                         httpServletRequest.getHeader("user-agent"),
                         proposta);
 
@@ -58,16 +59,5 @@ public class BloqueioController {
             else throw new ApiException(HttpStatus.UNPROCESSABLE_ENTITY, "O cartão já está bloqueado");
         }
         else throw new ApiException(HttpStatus.NOT_FOUND, "Id da proposta do cartão não encontrado ou cartão ainda não foi gerado");
-    }
-
-    private String getClientIpAdress(HttpServletRequest httpServletRequest){
-        String ip = httpServletRequest.getHeader("X-FORWARDED-FOR");
-        if (ip != null) {
-            String ipClient = ip.contains(",") ? ip.split(",")[0] : ip;
-            return ipClient;
-        }
-        else{
-            return httpServletRequest.getRemoteAddr();
-        }
     }
 }
