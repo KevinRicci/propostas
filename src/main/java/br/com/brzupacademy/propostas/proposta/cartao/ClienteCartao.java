@@ -1,10 +1,7 @@
 package br.com.brzupacademy.propostas.proposta.cartao;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -21,7 +18,7 @@ public interface ClienteCartao {
      */
     @PostMapping("api/cartoes/{id}/bloqueios")
     public Map<String, Object> bloqueiaCartao(@PathVariable(value = "id") String idCartao,
-                                              Map<String, String> sistemaResponsavel);
+                                              @RequestBody Map<String, String> sistemaResponsavel);
 
     /**
      *
@@ -30,5 +27,14 @@ public interface ClienteCartao {
      */
     @PostMapping("api/cartoes/{id}/avisos")
     public Map<String, Object> notificaAvisoViagem(@PathVariable(value = "id") String idCartao,
-                                                   Map<String, Object> detalhesViagem);
+                                                   @RequestBody Map<String, Object> detalhesViagem);
+
+    /**
+     *
+     * @param detalhesCarteira espera chaves: "email" e "carteira"
+     * @return chaves "resultado" e "id"
+     */
+    @PostMapping("api/cartoes/{id}/carteiras")
+    public Map<String, Object> cadastraCarteiraDigital(@PathVariable(value = "id") String idCartao,
+                                                       @RequestBody Map<String, Object> detalhesCarteira);
 }

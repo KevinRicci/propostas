@@ -3,6 +3,7 @@ package br.com.brzupacademy.propostas.proposta.cartao;
 import br.com.brzupacademy.propostas.exception.ApiException;
 import br.com.brzupacademy.propostas.proposta.Proposta;
 import br.com.brzupacademy.propostas.proposta.avisoViagem.AvisoViagem;
+import br.com.brzupacademy.propostas.proposta.carteira.CarteiraDigital;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,23 @@ public class SistemaCartao {
         }
         catch(FeignException exception){
             processaFeignException(exception, "notificar aviso viagem");
+        }
+        return null;
+    }
+
+    public Map<String, Object> cadastraCarteiraDigital(@NotNull CarteiraDigital carteiraDigital, @NotNull Proposta proposta){
+        Assert.isTrue(carteiraDigital != null && proposta != null && proposta.cartaoIsPresent() != false, "Carteira digital, proposta e cartão não podem ser nulos");
+
+        Map<String, Object> detalhesCarteira = new HashMap<>();
+        detalhesCarteira.put("email", proposta.getEmail());
+        detalhesCarteira.put("carteira", carteiraDigital.getCarteira().toString());
+
+        try{
+            Map<String, Object> retorno = clienteCartao.cadastraCarteiraDigital(proposta.getIdCartao(), detalhesCarteira);
+            return retorno;
+        }
+        catch(FeignException exception){
+            processaFeignException(exception, "Cadastrar carteira digital");
         }
         return null;
     }
