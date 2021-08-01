@@ -28,6 +28,7 @@ br\com\brzupacademy\propostas\exception\ErroPadronizado.class
 br\com\brzupacademy\propostas\exception\ExceptionHandlerAdvice.class
 br\com\brzupacademy\propostas\proposta\cartao\ScheduledCartao.class
 br\com\brzupacademy\propostas\proposta\carteira\CarteiraDigitalController.class
+br\com\brzupacademy\propostas\security\ColumnEncryptor.class
 br\com\brzupacademy\propostas\PropostasApplication.class
 br\com\brzupacademy\propostas\proposta\carteira\CarteiraDigitalRequest.class
 br\com\brzupacademy\propostas\utils\ClientRequest.class

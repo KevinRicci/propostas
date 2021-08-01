@@ -1,6 +1,7 @@
 package br.com.brzupacademy.propostas.proposta;
 
 import br.com.brzupacademy.propostas.exception.ApiException;
+import br.com.brzupacademy.propostas.security.ColumnEncryptor;
 import br.com.brzupacademy.propostas.validacao.CpfCnpj;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class Proposta {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @CpfCnpj
+    @CpfCnpj @Convert(converter = ColumnEncryptor.class)
     private String documento;
     @Email
     private String email;

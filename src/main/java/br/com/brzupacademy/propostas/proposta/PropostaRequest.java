@@ -1,6 +1,7 @@
 package br.com.brzupacademy.propostas.proposta;
 
 import br.com.brzupacademy.propostas.validacao.CpfCnpj;
+import org.springframework.security.crypto.encrypt.Encryptors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
